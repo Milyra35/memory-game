@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 number.className = 'hidden';
                 number.textContent = cards[i]; // I put the card number in it
                 
-                shuffledCards.push(card); // I push the created card in it
+                shuffledCards.push(card); // I push the created card in the array
 
                 card.appendChild(number);
             }
@@ -70,7 +70,6 @@ window.addEventListener("DOMContentLoaded", function() {
 
                             if(win === cards.length / 2)
                             {
-                                console.log("You've won !");
                                 let main = document.querySelector('body main');
                                 let winMessage = document.createElement('p');
                                 winMessage.className = "win";
@@ -80,12 +79,13 @@ window.addEventListener("DOMContentLoaded", function() {
                         }
                         else
                         {
-                            flippedCards.forEach(function(card) {
-                                card.classList.remove('flipped');
-                                number[i].classList.add('hidden');
-                            })
+                            setTimeout(() => {
+                                flippedCards.forEach(card => {
+                                    card.classList.remove('flipped');
+                                });
+                                flippedCards = [];
+                            }, 1500);
                         }
-                        flippedCards = [];
                     }
                 }
             })
