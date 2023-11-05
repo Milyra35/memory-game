@@ -31,3 +31,16 @@ p {
     justify-content:center;
     align-items:center;
 }
+
+.flipped {
+    background-color: green;
+}
+
+.win {
+    flex-basis: 100%;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
