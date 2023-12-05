@@ -1,6 +1,8 @@
+import { Card } from './Card';
+
 window.addEventListener("DOMContentLoaded", function() {
-    
-    let cards = [1, 2, 3, 4, 5, 6, 7, 8];
+
+    let cardsArray = [1, 2, 3, 4, 5, 6, 7, 8];
 
     function shuffleCards(array)
     {
@@ -11,86 +13,108 @@ window.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function generateCards(cards) 
+    function generateCards(numbers) 
     {
         let main = document.querySelector("body main");
-
-        shuffleCards(cards);
-
         let shuffledCards = []; // I create an empty array
 
-        for(let i=0; i<cards.length; i++)
-        {
-            for(let j=0; j<2; j++)
-            {
-                let card = document.createElement("section"); // I create the card
-                card.className = "card";
-                card.id = "card-" + cards[i];
-                let number = document.createElement("p");
-                number.className = 'hidden';
-                number.textContent = cards[i]; // I put the card number in it
-                
-                shuffledCards.push(card); // I push the created card in the array
-
-                card.appendChild(number);
+        numbers.forEach(number => {
+            for (let j = 0; j < 2; j++) {
+                let card = new Card(number);
+                shuffledCards.push(card);
             }
-        }
+        });
 
-        shuffleCards(shuffledCards); // I shuffle the created array to randomly display them in the DOM
+        shuffleCards(shuffledCards);
 
-        shuffledCards.forEach(function(card) {
-            main.appendChild(card); 
-        })
+        shuffledCards.forEach(card => {
+            main.appendChild(card.getCardElement());
+        });
+
+        return shuffledCards;
     }
 
-    generateCards(cards);
-
-    function clickOnTheCard() 
+    function clickOnTheCard(cards) 
     {
-        let cards = document.querySelectorAll('.card');
         let number = document.querySelectorAll('.hidden');
         let flippedCards = [];
         let win = 0;
 
-        for(let i=0; i<cards.length; i++)
-        {
-            cards[i].addEventListener("click", function() {
-                if(!cards[i].classList.contains('flipped'))
-                {
-                    number[i].classList.remove('hidden');
-                    cards[i].classList.add('flipped');
-                    flippedCards.push(cards[i]);
-
-                    if(flippedCards.length === 2)
-                    {
-                        if(flippedCards[0].id === flippedCards[1].id)
-                        {
-                            // console.log(flippedCards);
+        cards.forEach(card => {
+            card.getCardElement().addEventListener("click", function () {
+                if (!card.getCardElement().classList.contains('flipped')) {
+                    card.getCardElement().querySelector('.hidden').classList.remove('hidden');
+                    card.getCardElement().classList.add('flipped');
+                    flippedCards.push(card);
+    
+                    if (flippedCards.length === 2) {
+                        if (flippedCards[0].number === flippedCards[1].number) {
                             win++;
-
-                            if(win === cards.length / 2)
-                            {
+    
+                            if (win === cards.length / 2) {
                                 let main = document.querySelector('body main');
                                 let winMessage = document.createElement('p');
                                 winMessage.className = "win";
                                 winMessage.textContent = "Congratulations !";
                                 main.appendChild(winMessage);
+
+                                flippedCards = [];
                             }
-                        }
-                        else
-                        {
+                        } else {
                             setTimeout(() => {
                                 flippedCards.forEach(card => {
-                                    card.classList.remove('flipped');
+                                    card.getCardElement().classList.remove('flipped');
+                                    card.getCardElement().querySelector('.card p').classList.add('hidden');
                                 });
                                 flippedCards = [];
                             }, 1500);
                         }
                     }
                 }
-            })
-        }
+            });
+        });
+
+        // for(let i=0; i<cards.length; i++)
+        // {
+        //     cards[i].element.addEventListener("click", function() {
+        //         if(!cards[i].element.classList.contains('flipped'))
+        //         {
+        //             number[i].classList.remove('hidden');
+        //             cards[i].element.classList.add('flipped');
+        //             flippedCards.push(cards[i].element);
+
+        //             if(flippedCards.length === 2)
+        //             {
+        //                 if(flippedCards[0].id === flippedCards[1].id)
+        //                 {
+        //                     // console.log(flippedCards);
+        //                     win++;
+
+        //                     if(win === cards.length / 2)
+        //                     {
+        //                         let main = document.querySelector('body main');
+        //                         let winMessage = document.createElement('p');
+        //                         winMessage.className = "win";
+        //                         winMessage.textContent = "Congratulations !";
+        //                         main.appendChild(winMessage);
+        //                     }
+        //                 }
+        //                 else
+        //                 {
+        //                     setTimeout(() => {
+        //                         flippedCards.forEach(card => {
+        //                             card.element.classList.remove('flipped');
+        //                         });
+        //                         flippedCards = [];
+        //                     }, 1500);
+        //                 }
+        //             }
+        //         }
+        //     })
+        // }
     }
 
-    clickOnTheCard();
+    
+    let cards = generateCards(cardsArray);
+    clickOnTheCard(cards);
 })
