@@ -2,7 +2,24 @@ import { Card } from './Card';
 
 window.addEventListener("DOMContentLoaded", function() {
 
-    let cardsArray = [1, 2, 3, 4, 5, 6, 7, 8];
+    let cardsArray = [];
+    let validateLength = document.getElementById('validate');
+    let selectNumber = document.getElementById('number');
+
+    validateLength.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        let selectedValue = selectNumber.options[selectNumber.selectedIndex].value;
+        cardsArray.length = parseInt(selectedValue);
+
+        for(let i=0; i<=cardsArray.length; i++)
+        {
+            cardsArray[i - 1] = i;
+        }
+
+        let cards = generateCards(cardsArray);
+        clickOnTheCard(cards);
+    })
 
     function shuffleCards(array)
     {
@@ -79,6 +96,5 @@ window.addEventListener("DOMContentLoaded", function() {
         });
     }
     
-    let cards = generateCards(cardsArray);
-    clickOnTheCard(cards);
+    
 })
