@@ -46,10 +46,13 @@ window.addEventListener("DOMContentLoaded", function() {
                     card.getCardElement().querySelector('.hidden').classList.remove('hidden');
                     card.getCardElement().classList.add('flipped');
                     flippedCards.push(card);
+                    console.log(flippedCards);
     
                     if (flippedCards.length === 2) {
-                        if (flippedCards[0].number === flippedCards[1].number) {
+                        if (flippedCards[0].number === flippedCards[1].number) 
+                        {
                             win++;
+                            flippedCards = [];
     
                             if (win === cards.length / 2) {
                                 let main = document.querySelector('body main');
@@ -60,60 +63,21 @@ window.addEventListener("DOMContentLoaded", function() {
 
                                 flippedCards = [];
                             }
-                        } else {
+                        }
+                        else {
                             setTimeout(() => {
                                 flippedCards.forEach(card => {
                                     card.getCardElement().classList.remove('flipped');
                                     card.getCardElement().querySelector('.card p').classList.add('hidden');
                                 });
                                 flippedCards = [];
-                            }, 1500);
+                            }, 1000);
                         }
                     }
                 }
             });
         });
-
-        // for(let i=0; i<cards.length; i++)
-        // {
-        //     cards[i].element.addEventListener("click", function() {
-        //         if(!cards[i].element.classList.contains('flipped'))
-        //         {
-        //             number[i].classList.remove('hidden');
-        //             cards[i].element.classList.add('flipped');
-        //             flippedCards.push(cards[i].element);
-
-        //             if(flippedCards.length === 2)
-        //             {
-        //                 if(flippedCards[0].id === flippedCards[1].id)
-        //                 {
-        //                     // console.log(flippedCards);
-        //                     win++;
-
-        //                     if(win === cards.length / 2)
-        //                     {
-        //                         let main = document.querySelector('body main');
-        //                         let winMessage = document.createElement('p');
-        //                         winMessage.className = "win";
-        //                         winMessage.textContent = "Congratulations !";
-        //                         main.appendChild(winMessage);
-        //                     }
-        //                 }
-        //                 else
-        //                 {
-        //                     setTimeout(() => {
-        //                         flippedCards.forEach(card => {
-        //                             card.element.classList.remove('flipped');
-        //                         });
-        //                         flippedCards = [];
-        //                     }, 1500);
-        //                 }
-        //             }
-        //         }
-        //     })
-        // }
     }
-
     
     let cards = generateCards(cardsArray);
     clickOnTheCard(cards);
