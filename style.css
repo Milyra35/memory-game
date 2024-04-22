@@ -18,8 +18,9 @@ main {
     justify-content: center;
 }
 
-p {
+main p {
     margin: 0;
+    transform: rotateY(180deg);
 }
 
 .card {
@@ -34,6 +35,11 @@ p {
 
 .flipped {
     background-color: green;
+    transform: rotateY(180deg);
+}
+
+.flipping {
+    transition: transform 0.5s ease;
 }
 
 .win {

@@ -61,7 +61,7 @@ window.addEventListener("DOMContentLoaded", function() {
             card.getCardElement().addEventListener("click", function () {
                 if (!card.getCardElement().classList.contains('flipped')) {
                     card.getCardElement().querySelector('.hidden').classList.remove('hidden');
-                    card.getCardElement().classList.add('flipped');
+                    card.getCardElement().classList.add('flipped', 'flipping');
                     flippedCards.push(card);
                     console.log(flippedCards);
     
@@ -73,7 +73,7 @@ window.addEventListener("DOMContentLoaded", function() {
     
                             if (win === cards.length / 2) {
                                 let main = document.querySelector('body main');
-                                let winMessage = document.createElement('p');
+                                let winMessage = document.createElement('h3');
                                 winMessage.className = "win";
                                 winMessage.textContent = "Congratulations !";
                                 main.appendChild(winMessage);
@@ -85,6 +85,7 @@ window.addEventListener("DOMContentLoaded", function() {
                             setTimeout(() => {
                                 flippedCards.forEach(card => {
                                     card.getCardElement().classList.remove('flipped');
+                                    card.getCardElement().classList.remove('flipping');
                                     card.getCardElement().querySelector('.card p').classList.add('hidden');
                                 });
                                 flippedCards = [];
@@ -95,6 +96,4 @@ window.addEventListener("DOMContentLoaded", function() {
             });
         });
     }
-    
-    
 })
